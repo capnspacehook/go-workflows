@@ -1,0 +1,30 @@
+name: Lint workflows
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/*"
+
+  workflow_dispatch: {}
+
+jobs:
+  lint-workflows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: WillAbides/setup-go-faster@v1.11.0
+        with:
+          go-version-file: go.mod
+
+      - name: Cache Go files
+        uses: capnspacehook/cache-go@v1
+
+      - name: Lint workflow files
+        run: |
+          echo "::add-matcher::.github/actionlint-matcher.json"
+          go install github.com/rhysd/actionlint/cmd/actionlint@latest
+          actionlint

@@ -1,6 +1,7 @@
 name: Vulnerability scan
 
 on:
+  workflow_call:
   push:
     branches:
       - master
@@ -17,6 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: golang/govulncheck-action@v1.0.1
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: WillAbides/setup-go-faster@v1.11.0
         with:
           go-version-file: go.mod
+
+      - name: Cache Go files
+        uses: capnspacehook/cache-go@v1
+
+      - name: Scan code for vulnerabilities
+        run: |
+          go install go install golang.org/x/vuln/cmd/govulncheck@latest
+          govulncheck ./...

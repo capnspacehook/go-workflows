@@ -1,6 +1,7 @@
 name: Check generated files
 
 on:
+  workflow_call:
   push:
     branches:
       - master
@@ -27,8 +28,6 @@ jobs:
 
       - name: Cache Go files
         uses: capnspacehook/cache-go@v1
-
-      # Install any tools 'go generate' uses here
 
       - name: Ensure 'go generate' is clean
         run: |

@@ -15,6 +15,7 @@ on:
 
 jobs:
   check-go-generate:
+    name: Check generated files
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

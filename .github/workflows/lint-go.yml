@@ -13,6 +13,7 @@ on:
 
 jobs:
   check-mod-tidy:
+    name: Check if go.mod is tidy
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -39,6 +40,7 @@ jobs:
           exit 0
 
   staticcheck:
+    name: Run Staticcheck
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -59,6 +61,7 @@ jobs:
           install-go: false
 
   golangci-lint:
+    name: Run golangci-lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

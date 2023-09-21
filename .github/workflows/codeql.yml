@@ -1,4 +1,4 @@
-name: CodeQL
+name: Run CodeQL
 
 on:
   workflow_call:
@@ -15,6 +15,7 @@ on:
 
 jobs:
   analyze:
+    name: Run CodeQL
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

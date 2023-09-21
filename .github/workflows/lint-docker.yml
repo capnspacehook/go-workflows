@@ -17,6 +17,7 @@ on:
 
 jobs:
   lint-dockerfile:
+    name: Lint Dockerfile
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

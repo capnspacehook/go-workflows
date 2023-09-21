@@ -15,6 +15,7 @@ on:
 
 jobs:
   govulncheck:
+    name: Run govulncheck
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

@@ -9,7 +9,8 @@ on:
       - "v*.*.*"
 
 jobs:
-  release-binary:
+  release-binaries:
+    name: Release binaries
     runs-on: ubuntu-latest
     if: github.ref_type == 'tag'
     timeout-minutes: 15
@@ -46,6 +47,7 @@ jobs:
           args: release
 
   release-image:
+    name: Release image
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

@@ -11,6 +11,9 @@ on:
 
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+
 jobs:
   race-test:
     name: Test with race detector

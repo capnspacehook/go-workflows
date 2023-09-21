@@ -22,13 +22,11 @@ jobs:
       actions: write
       contents: read
       security-events: write
-
     strategy:
       fail-fast: false
       matrix:
         language: 
           - go
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

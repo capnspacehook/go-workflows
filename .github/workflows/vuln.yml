@@ -32,5 +32,5 @@ jobs:
 
       - name: Scan code for vulnerabilities
         run: |
-          go install go install golang.org/x/vuln/cmd/govulncheck@latest
+          go install golang.org/x/vuln/cmd/govulncheck@latest
           govulncheck ./...

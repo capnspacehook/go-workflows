@@ -63,7 +63,7 @@ jobs:
 
       - name: Get latest git tag
         id: get-tag
-        uses: olegtarasov/get-tag@v2.1
+        uses: olegtarasov/get-tag@v2.1.2
 
       - name: Build and push Docker image
         id: build-push

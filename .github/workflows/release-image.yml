@@ -1,66 +1,12 @@
-name: Release
+name: Release image
 
 on:
   workflow_call:
-    inputs:
-      release-binaries:
-        description: If binaries should be released or not
-        default: true
-        required: false
-        type: boolean
-      release-image:
-        description: If a Docker image should be released or not
-        default: true
-        required: false
-        type: boolean
-  push:
-    branches:
-      - master
-    tags:
-      - "v*.*.*"
 
 jobs:
-  release-binaries:
-    name: Release binaries
-    runs-on: ubuntu-latest
-    if: inputs.release-binaries == 'true' && github.ref_type == 'tag'
-    timeout-minutes: 15
-    permissions:
-      id-token: write
-      contents: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Checkout tags
-        run: git fetch --force --tags
-
-      - name: Install Go
-        uses: WillAbides/setup-go-faster@v1.11.0
-        with:
-          go-version-file: go.mod
-
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
-
-      - name: Install cosign
-        uses: sigstore/cosign-installer@main
-
-      - name: Build and release with goreleaser
-        uses: goreleaser/goreleaser-action@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          distribution: goreleaser
-          version: latest
-          args: release
-
   release-image:
     name: Release image
     runs-on: ubuntu-latest
-    if: inputs.release-image == 'true'
     timeout-minutes: 15
     permissions:
       contents: read

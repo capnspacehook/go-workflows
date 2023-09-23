@@ -3,7 +3,7 @@ name: Reproduce binary
 on:
   workflow_call:
     inputs:
-      extra_build_flags:
+      extra-build-flags:
         required: false
         type: string
 
@@ -35,8 +35,8 @@ jobs:
 
       - name: Attempt to reproduce binary
         run: |
-          BUILD_FLAGS="-b ${{ inputs.extra_build_flags }}"
-          if [[ -z ${{ inputs.extra_build_flags }} ]]; then
+          BUILD_FLAGS="-b ${{ inputs.extra-build-flags }}"
+          if [[ -z ${{ inputs.extra-build-flags }} ]]; then
             BUILD_FLAGS=""
           fi
 

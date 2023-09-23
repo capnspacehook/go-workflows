@@ -40,4 +40,5 @@ jobs:
           if ! gorepro -b="${{ inputs.extra-build-flags }}" -no-go-gc -v out; then
             go version -m out
             go version -m out.repro
+            exit 1
           fi

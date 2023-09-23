@@ -4,6 +4,7 @@ on:
   workflow_call:
     inputs:
       extra-build-flags:
+        description: Build flags that aren't detected by gorepro
         required: false
         type: string
 

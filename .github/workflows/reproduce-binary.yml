@@ -32,14 +32,13 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: build --single-target --snapshot -o out
+          args: build --verbose --single-target --snapshot -o out
 
       - name: Attempt to reproduce binary
         run: |
-          BUILD_FLAGS="-b=${{ inputs.extra-build-flags }}"
-          if [[ -z "${{ inputs.extra-build-flags }}" ]]; then
-            BUILD_FLAGS=""
-          fi
-
           go install github.com/capnspacehook/gorepro@latest
-          gorepro "${BUILD_FLAGS}" -no-go-gc -v out
+          gorepro -b="${{ inputs.extra-build-flags }}" -no-go-gc -v out
+          if [[ $? != 0 ]]; then
+            go version -m out
+            go version -m out.repro
+          fi

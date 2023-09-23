@@ -36,8 +36,8 @@ jobs:
 
       - name: Attempt to reproduce binary
         run: |
-          BUILD_FLAGS="-b ${{ inputs.extra-build-flags }}"
-          if [[ -z ${{ inputs.extra-build-flags }} ]]; then
+          BUILD_FLAGS="-b=${{ inputs.extra-build-flags }}"
+          if [[ -z "${{ inputs.extra-build-flags }}" ]]; then
             BUILD_FLAGS=""
           fi
 

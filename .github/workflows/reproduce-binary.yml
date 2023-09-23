@@ -1,0 +1,44 @@
+name: Reproduce binary
+
+on:
+  workflow_call:
+    inputs:
+      extra_build_flags:
+        required: false
+        type: string
+
+jobs:
+  repro-binary:
+    name: Check if binary is reproducible
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: WillAbides/setup-go-faster@v1.12.0
+        with:
+          go-version-file: go.mod
+
+      - name: Cache Go files
+        uses: capnspacehook/cache-go@v1
+
+      - name: Build with goreleaser
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          distribution: goreleaser
+          version: latest
+          args: build --single-target --snapshot -o out
+
+      - name: Attempt to reproduce binary
+        run: |
+          BUILD_FLAGS="-b ${{ inputs.extra_build_flags }}"
+          if [[ -z ${{ inputs.extra_build_flags }} ]]; then
+            BUILD_FLAGS=""
+          fi
+
+          go install github.com/capnspacehook/gorepro@latest
+          gorepro "${BUILD_FLAGS}" -no-go-gc -v out

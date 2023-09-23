@@ -37,8 +37,7 @@ jobs:
       - name: Attempt to reproduce binary
         run: |
           go install github.com/capnspacehook/gorepro@latest
-          gorepro -b="${{ inputs.extra-build-flags }}" -no-go-gc -v out
-          if [[ $? != 0 ]]; then
+          if ! gorepro -b="${{ inputs.extra-build-flags }}" -no-go-gc -v out; then
             go version -m out
             go version -m out.repro
           fi

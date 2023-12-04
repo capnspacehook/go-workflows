@@ -22,7 +22,7 @@ jobs:
         run: git fetch --force --tags
 
       - name: Install Go
-        uses: WillAbides/setup-go-faster@v1.12.0
+        uses: WillAbides/setup-go-faster@v1.13.0
         with:
           go-version-file: go.mod
 

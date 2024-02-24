@@ -41,7 +41,7 @@ jobs:
 
       # TODO: remove once https://github.com/github/codeql/issues/13992 is fixed
       - name: Install Go
-        uses: WillAbides/setup-go-faster@v1.12.0
+        uses: WillAbides/setup-go-faster@v1.14.0
         with:
           go-version-file: go.mod
 

@@ -50,7 +50,7 @@ jobs:
         uses: capnspacehook/cache-go@v1
 
       - name: Lint with staticcheck
-        uses: dominikh/staticcheck-action@v1.3.1
+        uses: dominikh/staticcheck-action@v1.4.0
         with:
           install-go: false
 

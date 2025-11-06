@@ -73,7 +73,8 @@ jobs:
           find . -type f -name '*_test.go' -exec grep -l '^func Fuzz' {} \; | while read -r FILE; do
               grep '^func Fuzz' "$FILE" | sed 's/func \(Fuzz[^(]*\).*/\1/' | while read -r FUZZ_NAME; do
                   echo "Running fuzz test: $FUZZ_NAME in $FILE"
-                  (cd "$test_dir" && go test ${RACE_FLAG} -run DONOT -fuzz="^${FUZZ_NAME}$" -fuzztime=10m) || exit 1
+                  TEST_DIR=$(dirname "$FILE")
+                  (cd "$TEST_DIR" && go test "$RACE_FLAG" -run DONOT -fuzz="^${FUZZ_NAME}$" -fuzztime=10m) || exit 1
               done
           done
 

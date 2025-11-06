@@ -2,6 +2,15 @@ name: Test
 
 on:
   workflow_call:
+    inputs:
+      build-image:
+        required: false
+        type: boolean
+        default: true
+      fuzz-with-race:
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -50,14 +59,18 @@ jobs:
 
       - name: Fuzz code for 10 minutes
         run: |
-          go test -fuzz Fuzz -run DONOT -fuzztime 10m
+          RACE_FLAG=""
+          if [[ "${{ inputs.fuzz-with-race }}" = "true" ]]; then
+            RACE_FLAG="-race"
+          fi
+          go test "${RACE_FLAG}" -fuzz Fuzz -run DONOT -fuzztime 10m ./...
 
   build-image:
     name: Build Docker image
     runs-on: ubuntu-latest
     # only run this check on pull requests, pushes to master will trigger
     # an image release
-    if: contains(github.ref, 'pull')
+    if: contains(github.ref, 'pull') && inputs.build-image
     timeout-minutes: 10
     steps:
       - name: Checkout code

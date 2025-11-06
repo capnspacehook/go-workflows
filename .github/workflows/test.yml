@@ -4,10 +4,12 @@ on:
   workflow_call:
     inputs:
       run-fuzz-tests:
+        description: Run fuzz tests recursively
         required: false
         type: boolean
         default: true
       fuzz-with-race:
+        description: Run fuzz tests with race detector
         required: false
         type: boolean
         default: false
@@ -48,7 +50,7 @@ jobs:
     name: Fuzz code
     runs-on: ubuntu-latest
     needs: race-test
-    if: inputs.run-fuzz-tests == 'true'
+    if: inputs.run-fuzz-tests
     timeout-minutes: 60
     steps:
       - name: Checkout code
@@ -64,12 +66,9 @@ jobs:
         with:
           cache-fuzz-corpus: true
 
-      - name: Fuzz code for 10 minutes
+      - name: Run fuzz tests
         run: |
-          RACE_FLAG=""
-          if [[ "${{ inputs.fuzz-with-race }}" = "true" ]]; then
-            RACE_FLAG="-race"
-          fi
+          RACE_FLAG="${{ inputs.fuzz-with-race && '-race' || '' }}"
           
           find . -type f -name '*_test.go' -exec grep -l '^func Fuzz' {} \; | while read -r FILE; do
               grep '^func Fuzz' "$FILE" | sed 's/func \(Fuzz[^(]*\).*/\1/' | while read -r FUZZ_NAME; do

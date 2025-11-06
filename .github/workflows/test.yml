@@ -34,7 +34,7 @@ jobs:
           go-version-file: go.mod
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@v2
+        uses: capnspacehook/cache-go/restore@v2.0.1
 
       - name: Ensure main package builds
         run: |
@@ -46,7 +46,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@v2
+        uses: capnspacehook/cache-go/save@v2.0.1
 
   fuzz:
     name: Fuzz code
@@ -64,7 +64,7 @@ jobs:
           go-version-file: go.mod
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@v2
+        uses: capnspacehook/cache-go/restore@v2.0.1
         with:
           cache-fuzz-corpus: true
 
@@ -84,7 +84,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@v2
+        uses: capnspacehook/cache-go/save@v2.0.1
         with:
           cache-fuzz-corpus: true
 

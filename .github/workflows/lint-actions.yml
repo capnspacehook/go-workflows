@@ -33,7 +33,7 @@ jobs:
           go-version-file: go.mod
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@v2
+        uses: capnspacehook/cache-go/restore@v2.0.1
 
       - name: Lint workflow files
         run: |
@@ -43,4 +43,4 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@v2
+        uses: capnspacehook/cache-go/save@v2.0.1

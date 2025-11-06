@@ -7,6 +7,10 @@ on:
         required: false
         type: boolean
         default: true
+      run-fuzz-tests:
+        required: false
+        type: boolean
+        default: true
       fuzz-with-race:
         required: false
         type: boolean
@@ -29,8 +33,8 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2.0.1
 
       - name: Ensure main package builds
         run: |
@@ -40,11 +44,16 @@ jobs:
         run: |
           go test -race -timeout 5m -v ./...
 
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2.0.1
+
   fuzz:
     name: Fuzz code
     runs-on: ubuntu-latest
     needs: race-test
-    timeout-minutes: 15
+    if: inputs.run-fuzz-tests == 'true'
+    timeout-minutes: 60
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -54,8 +63,10 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2.0.1
+        with:
+          cache-fuzz-corpus: true
 
       - name: Fuzz code for 10 minutes
         run: |
@@ -63,7 +74,19 @@ jobs:
           if [[ "${{ inputs.fuzz-with-race }}" = "true" ]]; then
             RACE_FLAG="-race"
           fi
-          go test "${RACE_FLAG}" -fuzz Fuzz -run DONOT -fuzztime 10m ./...
+          
+          find . -type f -name '*_test.go' -exec grep -l '^func Fuzz' {} \; | while read -r FILE; do
+              grep '^func Fuzz' "$FILE" | sed 's/func \(Fuzz[^(]*\).*/\1/' | while read -r FUZZ_NAME; do
+                  echo "Running fuzz test: $FUZZ_NAME in $FILE"
+                  (cd "$test_dir" && go test ${RACE_FLAG} -run DONOT -fuzz="^${FUZZ_NAME}$" -fuzztime=10m) || exit 1
+              done
+          done
+
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2.0.1
+        with:
+          cache-fuzz-corpus: true
 
   build-image:
     name: Build Docker image

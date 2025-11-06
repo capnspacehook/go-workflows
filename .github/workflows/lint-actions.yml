@@ -32,11 +32,15 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2.0.1
 
       - name: Lint workflow files
         run: |
           echo "::add-matcher::.github/actionlint-matcher.json"
           go install github.com/rhysd/actionlint/cmd/actionlint@latest
           actionlint
+
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2.0.1

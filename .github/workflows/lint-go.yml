@@ -20,8 +20,8 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2.0.1
 
       - name: Ensure go.mod was tidied
         run: |
@@ -32,6 +32,10 @@ jobs:
             echo "Running 'go mod tidy' modified go.mod and/or go.sum"
             exit 1
           fi
+
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2.0.1
 
   staticcheck:
     name: Run Staticcheck
@@ -46,13 +50,17 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2.0.1
 
       - name: Lint with staticcheck
         uses: dominikh/staticcheck-action@v1.4.0
         with:
           install-go: false
+
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2.0.1
 
   golangci-lint:
     name: Run golangci-lint

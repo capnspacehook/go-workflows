@@ -20,8 +20,8 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2.0.1
 
       - name: Ensure 'go generate' is clean
         run: |
@@ -34,3 +34,7 @@ jobs:
             echo "The files above need updating. Please run 'go generate'."
             exit 1
           fi
+      
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2.0.1

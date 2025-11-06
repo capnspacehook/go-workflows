@@ -26,8 +26,8 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2
 
       - name: Install cosign
         uses: sigstore/cosign-installer@main
@@ -40,3 +40,7 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release
+
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2

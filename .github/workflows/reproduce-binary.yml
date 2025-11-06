@@ -24,8 +24,8 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Cache Go files
-        uses: capnspacehook/cache-go@v1
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2
 
       - name: Build with goreleaser
         uses: goreleaser/goreleaser-action@v5
@@ -42,3 +42,7 @@ jobs:
             go version -m out.repro
             exit 1
           fi
+
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2

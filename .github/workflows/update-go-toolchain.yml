@@ -1,0 +1,51 @@
+name: Update Go version
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-go-version:
+    name: Update Go version
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Install Go
+        uses: WillAbides/setup-go-faster@v1.14.0
+        with:
+          go-version: stable
+
+      - name: Update Go version in go.mod
+        id: update-go
+        run: |
+          go get go@latest
+          STATUS=$(git status --porcelain go.mod)
+          if [[ -n $STATUS ]]; then
+            GO_VERSION="$(go mod edit -json | jq -r .Go)"
+            GO_RELEASE="$(echo "${GO_VERSION}" | head -c -3)"
+            go mod tidy -compat "${GO_VERSION}"
+
+            #shellcheck disable=SC2129
+            echo "go-updated=true" >> "$GITHUB_OUTPUT"
+            echo "go-version=${GO_VERSION}" >> "$GITHUB_OUTPUT"
+            echo "go-release=${GO_RELEASE}" >> "$GITHUB_OUTPUT"
+          else
+            echo "go-updated=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        if: steps.update-go.outputs.go-updated == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: "Update Go version to ${{ steps.update-go.outputs.go-version }}"
+          body: |
+            Release notes: https://go.dev/doc/go${{ steps.update-go.outputs.go-release }}
+            Patch nodes: https://go.dev/doc/devel/release#go${{ steps.update-go.outputs.go-release }}.minor
+          commit-message: "Update Go version to ${{ steps.update-go.outputs.go-version }}"

@@ -40,7 +40,7 @@ jobs:
           languages: ${{ matrix.language }}
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@v2.0.1
+        uses: capnspacehook/cache-go/restore@v2
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v4
@@ -62,4 +62,4 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@v2.0.1
+        uses: capnspacehook/cache-go/save@v2

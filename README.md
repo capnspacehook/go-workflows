@@ -202,6 +202,9 @@ jobs:
 
 Checks if binaries built by [`GoReleaser`](https://goreleaser.com/) are reproducible using [`gorepro`](https://github.com/capnspacehook/gorepro).
 
+`gorepro` is a tool that extracts build information embedded in Go binaries since Go 1.18 and uses that to reproduce the binary.
+There are currently some Go build flags that are currently not embedded go `gorepro` needs to be informed of them by passing them as inputs.
+
 #### Inputs
 
 | Name | Description | Required | Default |
@@ -271,7 +274,7 @@ jobs:
 
 ### [lint-docker](https://github.com/capnspacehook/go-workflows/blob/master/.github/workflows/lint-docker.yml)
 
-Lints Dockerfiles using [hadolint](https://github.com/hadolint/hadolint) and verifies that Docker images build successfully.
+Lints Dockerfiles using [`hadolint`](https://github.com/hadolint/hadolint) and verifies that Docker images build successfully.
 
 <details>
     <summary>Example usage:</summary>

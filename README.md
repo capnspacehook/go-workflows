@@ -189,7 +189,7 @@ name: Release binaries
 on:
   push:
     tags:
-      - "v*"
+      - "v*.*.*"
 
 jobs:
   release-binaries:
@@ -323,7 +323,7 @@ on:
     branches:
       - master
     tags:
-      - "v*"
+      - "v*.*.*"
 
 jobs:
   release-image:

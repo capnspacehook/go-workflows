@@ -282,7 +282,7 @@ Lints Dockerfiles using [`hadolint`](https://github.com/hadolint/hadolint) and v
     <summary>Example usage:</summary>
 
 ```yaml
-name: Lint Docker
+name: Lint Dockerfiles
 
 on:
   push:
@@ -301,7 +301,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  lint-docker:
+  lint-dockerfiles:
     permissions:
       contents: read
     uses: capnspacehook/go-workflows/.github/workflows/lint-docker.yml@master
@@ -360,7 +360,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  lint-actions:
+  lint-workflows:
     permissions:
       contents: read
     uses: capnspacehook/go-workflows/.github/workflows/lint-actions.yml@master

@@ -30,6 +30,10 @@ jobs:
           STATUS=$(git status --porcelain go.mod go.sum)
           if [[ -n $STATUS ]]; then
             echo "Running 'go mod tidy' modified go.mod and/or go.sum"
+            echo "Run 'go mod tidy -compat ${GO_VERSION}' to fix"
+            echo
+            echo "Diff:"
+            git diff
             exit 1
           fi
 

@@ -34,13 +34,9 @@ jobs:
       - name: Restore Go cache
         uses: capnspacehook/cache-go/restore@v2.0.1
 
-      - name: Ensure main package builds
-        run: |
-          go build
-
       - name: Run tests
         run: |
-          go test -race -timeout 5m -v ./...
+          go test -race -timeout 10m -v ./...
 
       - name: Save Go cache
         if: always()

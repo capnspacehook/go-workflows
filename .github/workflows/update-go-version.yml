@@ -47,5 +47,6 @@ jobs:
           title: "Update Go version to ${{ steps.update-go.outputs.go-version }}"
           body: |
             Release notes: https://go.dev/doc/go${{ steps.update-go.outputs.go-release }}
+
             Patch nodes: https://go.dev/doc/devel/release#go${{ steps.update-go.outputs.go-release }}.minor
-          commit-message: "Update Go version to ${{ steps.update-go.outputs.go-version }}"
+          commit-message: "Updated Go version to ${{ steps.update-go.outputs.go-version }}"

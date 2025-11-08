@@ -163,6 +163,8 @@ on:
       - "go.sum"
       - "**.go"
       - ".github/workflows/vuln.yml"
+  schedule:
+    - cron: "0 0 * * *"
 
   workflow_dispatch: {}
 
@@ -203,7 +205,7 @@ jobs:
 Checks if binaries built by [`GoReleaser`](https://goreleaser.com/) are reproducible using [`gorepro`](https://github.com/capnspacehook/gorepro).
 
 `gorepro` is a tool that extracts build information embedded in Go binaries since Go 1.18 and uses that to reproduce the binary.
-There are currently some Go build flags that are currently not embedded go `gorepro` needs to be informed of them by passing them as inputs.
+There are currently some Go build flags that are currently not embedded (namely `-ldflags`) so `gorepro` needs to be informed of them by passing them as inputs.
 
 #### Inputs
 
@@ -258,17 +260,17 @@ Creates a pull request to update the Go version in `go.mod` to the latest stable
 name: Update Go version
 
 on:
-  workflow_dispatch: {}
-
   schedule:
     - cron: "0 0 * * *"
 
+  workflow_dispatch: {}
+
 jobs:
-  update-go-toolchain:
+  update-go-version:
     permissions:
       contents: write
       pull-requests: write
-    uses: capnspacehook/go-workflows/.github/workflows/update-go-toolchain.yml@master
+    uses: capnspacehook/go-workflows/.github/workflows/update-go-version.yml@master
 ```
 </details>
 
@@ -322,8 +324,6 @@ on:
       - master
     tags:
       - "v*"
-
-  workflow_dispatch: {}
 
 jobs:
   release-image:
@@ -381,9 +381,23 @@ on:
   push:
     branches:
       - master
+  paths:
+      - "**.go"
+      - "go.mod"
+      - "go.sum"
+      - ".github/workflows/codeql.yml"
   pull_request:
     branches:
       - master
+  paths:
+      - "**.go"
+      - "go.mod"
+      - "go.sum"
+      - ".github/workflows/codeql.yml"
+  schedule:
+    - cron: "0 0 * * *"
+
+  workflow_dispatch: {}
 
 jobs:
   codeql:

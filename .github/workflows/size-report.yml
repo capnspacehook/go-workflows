@@ -2,6 +2,13 @@ name: Lint Go
 
 on:
   workflow_call:
+    inputs:
+      build-environment:
+        description: |
+          Environment variables to set when building your binary. Must be separated by newlines.
+        required: false
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -22,6 +29,8 @@ jobs:
         uses: capnspacehook/go-size-tracker@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          build-environment: ${{ inputs.build-environment }}
 
       - name: Test if the graph was created
         id: graph-exists

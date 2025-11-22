@@ -211,7 +211,7 @@ There are currently some Go build flags that are currently not embedded (namely 
 
 | Name | Description | Required | Default |
 | --- | --- | --- | --- |
-| `extra-build-flags` | Build flags that aren't detected by gorepro | false | ''|
+| `extra-build-flags` | Build flags that aren't detected by gorepro | false | '' |
 
 <details>
     <summary>Example usage:</summary>
@@ -277,6 +277,12 @@ jobs:
 ### [size-report](https://github.com/capnspacehook/go-workflows/blob/master/.github/workflows/size-report.yml)
 
 Adds a comment to pull requests with info on how much the changes will affect binary sizes using [`go-size-tracker`](https://github.com/capnspacehook/go-size-tracker).
+
+#### Inputs
+
+| Name | Description | Required | Default |
+| --- | --- | --- | --- |
+| `build-environment` | Environment variables to set when building your binary. Must be separated by newlines. | false | '' |
 
 <details>
     <summary>Example usage:</summary>

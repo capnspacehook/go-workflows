@@ -23,9 +23,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Test if the graph was created
+        id: graph-exists
+        run: |
+          GRAPH_EXISTS="false"
+          if [ -f graph.png ]; then
+            GRAPH_EXISTS="true"
+          fi
+          echo "graph_exists=${GRAPH_EXISTS}" >> "${GITHUB_OUTPUT}"
+
       - name: Upload graph and comment artifact
         id: upload-artifact
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && steps.graph-exists.outputs.graph_exists == 'true'
         uses: actions/upload-artifact@v5
         with:
           name: graph
@@ -41,14 +50,21 @@ jobs:
             echo "COMMENT<<EOF"
             echo "${COMMENT}"
             echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          } >> "${GITHUB_OUTPUT}"
 
-      - name: Create comment
+      - name: Create comment with graph
         uses: thollander/actions-comment-pull-request@v3
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && steps.graph-exists.outputs.graph_exists == 'true'
         with:
           message: |
             ${{ steps.comment.outputs.comment }}
 
             A graph is available here: ${{ steps.upload-artifact.outputs.artifact-url }}
+          comment-tag: size-report
+
+      - name: Create comment without graph
+        uses: thollander/actions-comment-pull-request@v3
+        if: github.event_name == 'pull_request' && steps.graph-exists.outputs.graph_exists == 'false'
+        with:
+          message: ${{ steps.comment.outputs.comment }}
           comment-tag: size-report

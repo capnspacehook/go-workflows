@@ -381,7 +381,7 @@ on:
   push:
     branches:
       - master
-  paths:
+    paths:
       - "**.go"
       - "go.mod"
       - "go.sum"
@@ -389,7 +389,7 @@ on:
   pull_request:
     branches:
       - master
-  paths:
+    paths:
       - "**.go"
       - "go.mod"
       - "go.sum"

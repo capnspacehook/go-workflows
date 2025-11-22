@@ -274,6 +274,45 @@ jobs:
 ```
 </details>
 
+### [size-report](https://github.com/capnspacehook/go-workflows/blob/master/.github/workflows/size-report.yml)
+
+Adds a comment to pull requests with info on how much the changes will affect binary sizes using [`go-size-tracker`](https://github.com/capnspacehook/go-size-tracker).
+
+<details>
+    <summary>Example usage:</summary>
+
+```yaml
+name: Size report
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.go"
+      - "go.mod"
+      - "go.sum"
+      - ".github/workflows/size-report.yml"
+  pull_request:
+    branches:
+      - "*"
+    paths:
+      - "**.go"
+      - "go.mod"
+      - "go.sum"
+      - ".github/workflows/size-report.yml"
+
+  workflow_dispatch: {}
+
+jobs:
+  size-report:
+    permissions:
+      contents: write # so go-size-tracker can use git notes to cache size records
+      pull-requests: write # so go-size-tracker can comment on PRs
+    uses: capnspacehook/go-workflows/.github/workflows/size-report.yml@master
+```
+</details>
+
 ### [lint-docker](https://github.com/capnspacehook/go-workflows/blob/master/.github/workflows/lint-docker.yml)
 
 Lints Dockerfiles using [`hadolint`](https://github.com/hadolint/hadolint) and verifies that Docker images build successfully.

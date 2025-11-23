@@ -41,6 +41,47 @@ jobs:
         if: always()
         uses: capnspacehook/cache-go/save@v2.0.1
 
+  check-test-symbols:
+    name: Check for test symbols in main packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Go
+        uses: WillAbides/setup-go-faster@v1.14.0
+        with:
+          go-version-file: go.mod
+
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2.0.1
+
+      - name: Check for test symbols
+        run: |
+          go install github.com/loov/goda@latest
+
+          MAIN_PKGS="$(go list -f '{{if eq .Name "main"}}{{.ImportPath}}{{end}}' ./...)"
+          #shellcheck disable=SC2086
+          for main_pkg in ${MAIN_PKGS}; do
+            for import in "testing" "github.com/stretchr/testify" "github.com/google/go-cmp" "github.com/matryer/is" "go.uber.org/goleak"; do
+              # add the module to go.mod if it's not a stdlib package
+              if echo "${import}" | grep -q '/'; then
+                go get "${import}@latest"
+              fi
+              COUNT="$(goda tree reach\(${main_pkg}:all, ${import}/...\) | tee /dev/stderr | tr -d ' ' | wc -l)"
+              if [ "${COUNT}" -gt 0 ]; then
+                echo
+                echo "Found test symbols in ${main_pkg} imported from ${import}"
+                exit 1
+              fi
+            done
+          done
+
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2.0.1
+
   staticcheck:
     name: Run Staticcheck
     runs-on: ubuntu-latest

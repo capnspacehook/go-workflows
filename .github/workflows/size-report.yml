@@ -47,6 +47,7 @@ jobs:
 
       - name: Test if the graph was created
         id: graph-exists
+        if: github.event_name == 'pull_request'
         run: |
           GRAPH_EXISTS="false"
           if [ -f graph.png ]; then

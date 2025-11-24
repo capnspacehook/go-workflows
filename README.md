@@ -282,7 +282,9 @@ Adds a comment to pull requests with info on how much the changes will affect bi
 
 | Name | Description | Required | Default |
 | --- | --- | --- | --- |
+| `working-directory` | Relative path to the working directory that should be used to build your binary. | false | '.' |
 | `build-environment` | Environment variables to set when building your binary. Must be separated by newlines. | false | '' |
+| `build-arguments` | Arguments to 'go build' that will build your binary. The binary must be written to a file named 'out' in the working directory. | false | '-buildvcs=false -ldflags="-s -w" -trimpath -o out' |
 
 <details>
     <summary>Example usage:</summary>

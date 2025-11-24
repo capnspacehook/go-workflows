@@ -34,7 +34,7 @@ jobs:
       pull-requests: write 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Compare sizes
         uses: capnspacehook/go-size-tracker@master

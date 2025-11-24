@@ -26,7 +26,7 @@ permissions:
   pull-requests: write 
 
 jobs:
-  run-action:
+  size-report:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

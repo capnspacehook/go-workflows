@@ -123,4 +123,4 @@ jobs:
           go-version-file: go.mod
 
       - name: Lint with golangci-lint
-        uses: golangci/golangci-lint-action@v9.0.0
+        uses: golangci/golangci-lint-action@v9.1.0

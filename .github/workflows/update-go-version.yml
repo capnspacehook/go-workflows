@@ -42,7 +42,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.update-go.outputs.go-updated == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           title: "Update Go version to ${{ steps.update-go.outputs.go-version }}"
           body: |

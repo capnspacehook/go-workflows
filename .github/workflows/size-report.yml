@@ -36,6 +36,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v6.3.0
+        with:
+          go-version-file: go.mod
+          cache: false
+
       - name: Compare sizes
         uses: capnspacehook/go-size-tracker@master
         env:
@@ -58,7 +64,7 @@ jobs:
       - name: Upload graph and comment artifact
         id: upload-artifact
         if: github.event_name == 'pull_request' && steps.graph-exists.outputs.graph_exists == 'true'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v5
         with:
           name: graph
           path: |

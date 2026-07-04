@@ -84,6 +84,31 @@ jobs:
         if: always()
         uses: capnspacehook/cache-go/save@v2.0.2
 
+  go-fix:
+    name: Run go fix
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Go
+        uses: actions/setup-go@v6.5.0
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Restore Go cache
+        uses: capnspacehook/cache-go/restore@v2.0.2
+
+      - name: Run go fix
+        run: |
+          go fix -diff ./...
+
+      - name: Save Go cache
+        if: always()
+        uses: capnspacehook/cache-go/save@v2.0.2
+
   staticcheck:
     name: Run Staticcheck
     runs-on: ubuntu-latest

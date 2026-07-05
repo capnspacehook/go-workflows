@@ -2,7 +2,7 @@
 
 Collection of opinionated reusable Github Actions workflows for Go.
 
-The workflows are optimized for execution speed and many are designed with supply chain security in mind. They use [setup-go-faster](https://github.com/WillAbides/setup-go-faster) to install Go, and [cache-go](https://github.com/capnspacehook/cache-go) to cache Go modules and build artifacts separately. I use them to in both projects that are primarily CLI tools, and libraries used as a Go module.
+The workflows are optimized for execution speed and many are designed with supply chain security in mind. They use [cache-go](https://github.com/capnspacehook/cache-go) to cache Go modules and build artifacts separately. I use them both in both projects that are primarily CLI tools, and libraries used as a Go module.
 
 The Go version used in the workflows is the Go version in `go.mod`. I find it helpful for CLI tool projects as
 updating the Go version in `go.mod` means the same version of Go will be used locally and in CI. Likewise for

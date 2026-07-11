@@ -41,8 +41,7 @@ jobs:
       - name: Run actionlint
         run: |
           echo "::add-matcher::.github/actionlint-matcher.json"
-          go install github.com/rhysd/actionlint/cmd/actionlint@latest
-          actionlint
+          go tool actionlint
 
       - name: Save Go cache
         if: always()

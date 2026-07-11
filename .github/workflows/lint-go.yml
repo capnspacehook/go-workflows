@@ -65,8 +65,6 @@ jobs:
 
       - name: Check for test symbols
         run: |
-          go install github.com/loov/goda@latest
-
           MAIN_PKGS="$(go list -f '{{if eq .Name "main"}}{{.ImportPath}}{{end}}' ./...)"
           #shellcheck disable=SC2086
           for main_pkg in ${MAIN_PKGS}; do
@@ -75,7 +73,7 @@ jobs:
               if echo "${import}" | grep -q '/'; then
                 go get "${import}@latest"
               fi
-              COUNT="$(goda tree reach\(${main_pkg}:all, ${import}/...\) | tee /dev/stderr | tr -d ' ' | wc -l)"
+              COUNT="$(go tool goda tree reach\(${main_pkg}:all, ${import}/...\) | tee /dev/stderr | tr -d ' ' | wc -l)"
               if [ "${COUNT}" -gt 0 ]; then
                 echo
                 echo "Found test symbols in ${main_pkg} imported from ${import}"

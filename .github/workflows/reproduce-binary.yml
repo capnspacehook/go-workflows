@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
 
       - name: Install Go
         uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
@@ -38,11 +40,13 @@ jobs:
       - name: Attempt to reproduce binary
         run: |
           go install github.com/capnspacehook/gorepro@master
-          if ! gorepro -b="${{ inputs.extra-build-flags }}" -v out; then
+          if ! gorepro -b="${INPUTS_EXTRA_BUILD_FLAGS}" -v out; then
             go version -m out
             go version -m out.repro
             exit 1
           fi
+        env:
+          INPUTS_EXTRA_BUILD_FLAGS: ${{ inputs.extra-build-flags }}
 
       - name: Save Go cache
         if: always()

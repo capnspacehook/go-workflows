@@ -79,6 +79,6 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
 
       - name: Sign container image
-        run: cosign sign --yes ghcr.io/${{ github.repository }}@${STEPS_BUILD_PUSH_OUTPUTS_DIGEST}
+        run: cosign sign --yes "ghcr.io/${{ github.repository }}@${STEPS_BUILD_PUSH_OUTPUTS_DIGEST}"
         env:
           STEPS_BUILD_PUSH_OUTPUTS_DIGEST: ${{ steps.build-push.outputs.digest }}

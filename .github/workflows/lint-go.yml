@@ -54,6 +54,16 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Checkout tools go.mod
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          repository: capnspacehook/go-workflows
+          path: go-workflows
+          sparse-checkout: |
+            go.mod
+            go.sum
+          persist-credentials: false
+
       - name: Install Go
         uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
@@ -73,7 +83,7 @@ jobs:
               if echo "${import}" | grep -q '/'; then
                 go get "${import}@latest"
               fi
-              COUNT="$(go tool goda tree reach\(${main_pkg}:all, ${import}/...\) | tee /dev/stderr | tr -d ' ' | wc -l)"
+              COUNT="$(go tool -modfile=go-workflows/go.mod goda tree reach\(${main_pkg}:all, ${import}/...\) | tee /dev/stderr | tr -d ' ' | wc -l)"
               if [ "${COUNT}" -gt 0 ]; then
                 echo
                 echo "Found test symbols in ${main_pkg} imported from ${import}"

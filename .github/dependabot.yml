@@ -3,4 +3,28 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        update-types:
+          - 'minor'
+          - 'patch'
+
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    allow:
+      - dependency-name: 'github.com/capnspacehook/gorepro'
+      - dependency-name: 'github.com/loov/goda'
+      - dependency-name: 'github.com/rhysd/actionlint'
+      - dependency-name: 'golang.org/x/vuln'
+    groups:
+      gomod:
+        update-types:
+          - 'minor'
+          - 'patch'

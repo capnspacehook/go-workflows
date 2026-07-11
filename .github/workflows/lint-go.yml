@@ -70,7 +70,7 @@ jobs:
           MAIN_PKGS="$(go list -f '{{if eq .Name "main"}}{{.ImportPath}}{{end}}' ./...)"
           #shellcheck disable=SC2086
           for main_pkg in ${MAIN_PKGS}; do
-            for import in "testing" "github.com/stretchr/testify" "github.com/google/go-cmp" "github.com/matryer/is" "go.uber.org/goleak"; do
+            for import in "testing" "pgregory.net/rapid" "github.com/stretchr/testify" "github.com/google/go-cmp" "github.com/matryer/is" "go.uber.org/goleak"; do
               # add the module to go.mod if it's not a stdlib package
               if echo "${import}" | grep -q '/'; then
                 go get "${import}@latest"

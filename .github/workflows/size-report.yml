@@ -34,10 +34,10 @@ jobs:
       pull-requests: write 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Install Go
-        uses: actions/setup-go@v6.5.0
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
           go-version-file: go.mod
           cache: false
@@ -64,7 +64,7 @@ jobs:
       - name: Upload graph and comment artifact
         id: upload-artifact
         if: github.event_name == 'pull_request' && steps.graph-exists.outputs.graph_exists == 'true'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: graph
           path: |
@@ -82,7 +82,7 @@ jobs:
           } >> "${GITHUB_OUTPUT}"
 
       - name: Create comment with graph
-        uses: thollander/actions-comment-pull-request@v3
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
         if: github.event_name == 'pull_request' && steps.graph-exists.outputs.graph_exists == 'true'
         with:
           message: |
@@ -92,7 +92,7 @@ jobs:
           comment-tag: size-report
 
       - name: Create comment without graph
-        uses: thollander/actions-comment-pull-request@v3
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
         if: github.event_name == 'pull_request' && steps.graph-exists.outputs.graph_exists == 'false'
         with:
           message: ${{ steps.comment.outputs.comment }}

@@ -8,6 +8,7 @@ jobs:
     name: Run CodeQL
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    if: ${{ !github.event.repository.private }}
     permissions:
       actions: write
       contents: read
@@ -19,7 +20,7 @@ jobs:
           - go
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Exit is repository is private
         env:
@@ -35,15 +36,15 @@ jobs:
           fi
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+        uses: github/codeql-action/init@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
         with:
           languages: ${{ matrix.language }}
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@v2.0.2
+        uses: capnspacehook/cache-go/restore@9fca1a5a6020fb66aa66c17d3049cc69fd3c80d9 # v2.0.2
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v4
+        uses: github/codeql-action/autobuild@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
 
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
@@ -56,10 +57,10 @@ jobs:
       #   ./location_of_script_within_repo/buildscript.sh
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
+        uses: github/codeql-action/analyze@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
         with:
           category: "/language:${{matrix.language}}"
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@v2.0.2
+        uses: capnspacehook/cache-go/save@9fca1a5a6020fb66aa66c17d3049cc69fd3c80d9 # v2.0.2

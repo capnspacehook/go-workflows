@@ -15,10 +15,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Install Go
-        uses: actions/setup-go@v6.5.0
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
           check-latest: true
           cache: false
@@ -30,7 +30,7 @@ jobs:
           STATUS=$(git status --porcelain go.mod)
           if [[ -n $STATUS ]]; then
             GO_VERSION="$(go mod edit -json | jq -r .Go)"
-            GO_RELEASE="$(echo "${GO_VERSION}" | head -c -3)"
+            GO_RELEASE="$(echo "${GO_VERSION}" | grep -Po '^\d+\.\d+')"
             go mod tidy -compat "${GO_VERSION}"
 
             #shellcheck disable=SC2129
@@ -43,7 +43,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.update-go.outputs.go-updated == 'true'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           title: "Update Go version to ${{ steps.update-go.outputs.go-version }}"
           body: |

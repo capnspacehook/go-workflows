@@ -14,7 +14,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
 
@@ -22,19 +22,19 @@ jobs:
         run: git fetch --force --tags
 
       - name: Install Go
-        uses: actions/setup-go@v6.5.0
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
           go-version-file: go.mod
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@v2.0.2
+        uses: capnspacehook/cache-go/restore@9fca1a5a6020fb66aa66c17d3049cc69fd3c80d9 # v2.0.2
 
       - name: Install cosign
         uses: sigstore/cosign-installer@main
 
       - name: Build and release with goreleaser
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@f06c13b6b1a9625abc9e6e439d9c05a8f2190e94 # v7.2.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -44,4 +44,4 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@v2.0.2
+        uses: capnspacehook/cache-go/save@9fca1a5a6020fb66aa66c17d3049cc69fd3c80d9 # v2.0.2

@@ -24,7 +24,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@9fca1a5a6020fb66aa66c17d3049cc69fd3c80d9 # v2.0.2
+        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
 
       - name: Ensure 'go generate' is clean
         run: |
@@ -40,4 +40,4 @@ jobs:
       
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@9fca1a5a6020fb66aa66c17d3049cc69fd3c80d9 # v2.0.2
+        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0

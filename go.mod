@@ -1,6 +1,6 @@
 module github.com/capnspacehook/go-workflows
 
-go 1.26.5
+go 1.25.0
 
 tool (
 	github.com/capnspacehook/gorepro

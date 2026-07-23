@@ -38,7 +38,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
       - name: Build with goreleaser
         uses: goreleaser/goreleaser-action@f06c13b6b1a9625abc9e6e439d9c05a8f2190e94 # v7.2.3
@@ -59,4 +59,4 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1

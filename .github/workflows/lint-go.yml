@@ -24,7 +24,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
       - name: Ensure go.mod was tidied
         run: |
@@ -42,7 +42,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
   check-test-symbols:
     name: Check for test symbols in main packages
@@ -71,7 +71,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
       - name: Check for test symbols
         run: |
@@ -94,7 +94,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
   go-fix:
     name: Run go fix
@@ -113,7 +113,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
       - name: Run go fix
         run: |
@@ -121,7 +121,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
   staticcheck:
     name: Run Staticcheck
@@ -140,7 +140,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
       - name: Lint with staticcheck
         uses: dominikh/staticcheck-action@9716614d4101e79b4340dd97b10e54d68234e431 # v1.4.1
@@ -149,7 +149,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
   golangci-lint:
     name: Run golangci-lint

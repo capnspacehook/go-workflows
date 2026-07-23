@@ -35,7 +35,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
       - name: Run tests
         run: |
@@ -43,7 +43,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
   fuzz:
     name: Fuzz code
@@ -64,7 +64,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
         with:
           cache-fuzz-corpus: true
 
@@ -82,6 +82,6 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
         with:
           cache-fuzz-corpus: true

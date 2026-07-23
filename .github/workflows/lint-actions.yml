@@ -46,7 +46,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
       - name: Run actionlint
         run: |
@@ -55,7 +55,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
   zizmor:
     name: Run zizmor
@@ -71,4 +71,4 @@ jobs:
           persist-credentials: false
 
       - name: Run zizmor
-        uses: zizmorcore/zizmor-action@192e21d79ab29983730a13d1382995c2307fbcaa # v0.5.7
+        uses: zizmorcore/zizmor-action@6599ee8b7a49aef6a770f63d261d214911a7ce02 # v0.6.0

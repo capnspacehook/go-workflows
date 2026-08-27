@@ -25,12 +25,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Checkout tools go.mod
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: capnspacehook/go-workflows
           path: go-workflows
@@ -46,7 +46,7 @@ jobs:
           cache: false
 
       - name: Restore Go cache
-        uses: capnspacehook/cache-go/restore@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/restore@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
       - name: Run actionlint
         run: |
@@ -55,7 +55,7 @@ jobs:
 
       - name: Save Go cache
         if: always()
-        uses: capnspacehook/cache-go/save@1c52528ce96ee3f9214894a877c4db64bb206558 # v2.1.0
+        uses: capnspacehook/cache-go/save@4f3bc64b4556d727693579cee939b5f7b7a96ecc # v2.1.1
 
   zizmor:
     name: Run zizmor
@@ -66,9 +66,9 @@ jobs:
       actions: read          # Only needed for private repos. Needed for upload-sarif to read workflow run info.
     steps:
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Run zizmor
-        uses: zizmorcore/zizmor-action@192e21d79ab29983730a13d1382995c2307fbcaa # v0.5.7
+        uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
